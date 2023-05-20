@@ -1,0 +1,7 @@
+#!/bin/sh
+# Usage: 
+
+[ $# -eq 2 ] || echo 'Usage:' $0 INPUT OUTPUT
+[ $# -eq 2 ] || exit
+echo ffmpeg -i $1 -vf scale=960:540 $2
+ffmpeg -i $1 -vf scale=960:540 $2

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+trickle -s -d 128 -u 128 firefox -P $1 &

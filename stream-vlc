@@ -1,0 +1,11 @@
+#!/bin/sh
+
+SRC=`pactl list | grep "Monitor Source" | cut -d':' -f 2 | sed -e 's/ //g'`
+IP=`hostname -I |sed -e 's/ //g'`
+
+echo "Starting VLC. Connect to:"
+echo http://$IP:9898/vlc.mp3
+
+echo "cvlc pulse://$SRC --sout '#transcode{acodec=mp3,ab=128,channels=2}:standard{access=http,dst=0.0.0.0:9898/vlc.mp3}' --http-host=$IP"
+cvlc pulse://$SRC --sout '#transcode{acodec=mp3,ab=128,channels=2}:standard{access=http,dst=0.0.0.0:9898/vlc.mp3}'
+#cvlc -vvv pulse://$SRC --sout '#transcode{acodec=mp3,ab=128,channels=2}:standard{access=http,dst=0.0.0.0:9898/vlc.mp3}'

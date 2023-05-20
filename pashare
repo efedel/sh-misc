@@ -1,0 +1,18 @@
+#!/bin/sh
+
+SRC=`pactl list | grep "Monitor Source" | cut -d':' -f 2 | sed -e 's/ //g'`
+
+case "$1" in
+  start)
+    echo Using device $SRC
+    $0 stop 
+    pactl load-module module-simple-protocol-tcp rate=48000 format=s16le channels=2 source=2 record=true port=8000
+    ;;
+  stop)
+    pactl unload-module `pactl list | grep tcp -B1 | grep M | sed 's/[^0-9]//g'`
+    ;;
+  *)
+    echo "Usage: $0 start|stop" >&2
+    ;;
+esac
+
